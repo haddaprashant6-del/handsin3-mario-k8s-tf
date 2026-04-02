@@ -451,22 +451,22 @@ jobs:
             echo "status=failure" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Send Slack notification
-        uses: slackapi/slack-github-action@v1.27.0
-        if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
-        with:
-          payload: |
-            {
-              "text": "${{ steps.result.outputs.msg }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*${{ steps.result.outputs.msg }}*\n*Repo:* ${{ github.repository }}\n*Branch:* `${{ github.ref_name }}`\n*Actor:* ${{ github.actor }}\n*Run:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Logs>"
-                  }
-                }
-              ]
+      # - name: Send Slack notification
+      #   uses: slackapi/slack-github-action@v1.27.0
+      #   if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
+      #   with:
+      #     payload: |
+      #       {
+      #         "text": "${{ steps.result.outputs.msg }}",
+      #         "blocks": [
+      #           {
+      #             "type": "section",
+      #             "text": {
+      #               "type": "mrkdwn",
+      #               "text": "*${{ steps.result.outputs.msg }}*\n*Repo:* ${{ github.repository }}\n*Branch:* `${{ github.ref_name }}`\n*Actor:* ${{ github.actor }}\n*Run:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Logs>"
+      #             }
+      #           }
+      #         ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
