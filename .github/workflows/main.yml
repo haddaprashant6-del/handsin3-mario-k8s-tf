@@ -431,43 +431,43 @@ jobs:
   # ──────────────────────────────────────────────────────────────
   # JOB 7 — Notify on completion
   # ──────────────────────────────────────────────────────────────
-  notify:
-    name: 📣 Notify
-    runs-on: ubuntu-22.04
-    needs: [deploy-mario, terraform-destroy]
-    if: always() && (needs.deploy-mario.result != 'skipped' || needs.terraform-destroy.result != 'skipped')
-    steps:
-      - name: Determine result
-        id: result
-        run: |
-          if [[ "${{ needs.deploy-mario.result }}" == "success" ]]; then
-            echo "msg=🎮 Super Mario deployed to EKS successfully!" >> "$GITHUB_OUTPUT"
-            echo "status=success" >> "$GITHUB_OUTPUT"
-          elif [[ "${{ needs.terraform-destroy.result }}" == "success" ]]; then
-            echo "msg=💥 EKS cluster destroyed successfully." >> "$GITHUB_OUTPUT"
-            echo "status=success" >> "$GITHUB_OUTPUT"
-          else
-            echo "msg=❌ Pipeline failed — check the logs." >> "$GITHUB_OUTPUT"
-            echo "status=failure" >> "$GITHUB_OUTPUT"
-          fi
+  # notify:
+  #   name: 📣 Notify
+  #   runs-on: ubuntu-22.04
+  #   needs: [deploy-mario, terraform-destroy]
+  #   if: always() && (needs.deploy-mario.result != 'skipped' || needs.terraform-destroy.result != 'skipped')
+  #   steps:
+  #     - name: Determine result
+  #       id: result
+  #       run: |
+  #         if [[ "${{ needs.deploy-mario.result }}" == "success" ]]; then
+  #           echo "msg=🎮 Super Mario deployed to EKS successfully!" >> "$GITHUB_OUTPUT"
+  #           echo "status=success" >> "$GITHUB_OUTPUT"
+  #         elif [[ "${{ needs.terraform-destroy.result }}" == "success" ]]; then
+  #           echo "msg=💥 EKS cluster destroyed successfully." >> "$GITHUB_OUTPUT"
+  #           echo "status=success" >> "$GITHUB_OUTPUT"
+  #         else
+  #           echo "msg=❌ Pipeline failed — check the logs." >> "$GITHUB_OUTPUT"
+  #           echo "status=failure" >> "$GITHUB_OUTPUT"
+  #         fi
 
-      # - name: Send Slack notification
-      #   uses: slackapi/slack-github-action@v1.27.0
-      #   if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
-      #   with:
-      #     payload: |
-      #       {
-      #         "text": "${{ steps.result.outputs.msg }}",
-      #         "blocks": [
-      #           {
-      #             "type": "section",
-      #             "text": {
-      #               "type": "mrkdwn",
-      #               "text": "*${{ steps.result.outputs.msg }}*\n*Repo:* ${{ github.repository }}\n*Branch:* `${{ github.ref_name }}`\n*Actor:* ${{ github.actor }}\n*Run:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Logs>"
-      #             }
-      #           }
-      #         ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  #     # - name: Send Slack notification
+  #     #   uses: slackapi/slack-github-action@v1.27.0
+  #     #   if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
+  #     #   with:
+  #     #     payload: |
+  #     #       {
+  #     #         "text": "${{ steps.result.outputs.msg }}",
+  #     #         "blocks": [
+  #     #           {
+  #     #             "type": "section",
+  #     #             "text": {
+  #     #               "type": "mrkdwn",
+  #     #               "text": "*${{ steps.result.outputs.msg }}*\n*Repo:* ${{ github.repository }}\n*Branch:* `${{ github.ref_name }}`\n*Actor:* ${{ github.actor }}\n*Run:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Logs>"
+  #     #             }
+  #     #           }
+  #     #         ]
+  #           }
+  #       env:
+  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
