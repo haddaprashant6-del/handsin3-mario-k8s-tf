@@ -37,7 +37,7 @@ permissions:
 
 jobs:
   # ──────────────────────────────────────────────────────────────
-  # JOB 1 — Terraform Lint & Validate##
+  # JOB 1 — Terraform Lint & Validate###
   # ──────────────────────────────────────────────────────────────
   terraform-validate:
     name: 🔍 Lint & Validate
