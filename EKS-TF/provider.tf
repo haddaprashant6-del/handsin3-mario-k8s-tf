@@ -17,7 +17,7 @@ terraform {
 provider "aws" {
   region                   = var.aws_region
   #shared_credentials_files = ["~/.aws/credentials"]  # Use AWS credentials file
-  profile                  = "default"  # Specify AWS CLI profile if required
+  # profile                  = "default"  # Specify AWS CLI profile if required
   default_tags {
     tags = {
       Project     = var.project_name
