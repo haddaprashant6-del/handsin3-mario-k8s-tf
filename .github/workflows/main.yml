@@ -155,11 +155,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      #- name: Set up Terraform ${{ env.TF_VERSION }}
-      # uses: hashicorp/setup-terraform@v3
-      #  with:
-       #   terraform_version: ${{ env.TF_VERSION }}
+      - name: Set up Terraform ${{ env.TF_VERSION }}
+        uses: hashicorp/setup-terraform@v3
+        with:
+         terraform_version: ${{ env.TF_VERSION }}
 
     #  - name: Configure AWS credentials (OIDC)
     #    uses: aws-actions/configure-aws-credentials@v4
