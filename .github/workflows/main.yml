@@ -31,7 +31,7 @@ env:
   TF_CLI_ARGS: "-no-color"
 
 permissions:
-  id-token: write   # For OIDC auth to AWS
+  id-token: write   # For OIDC auth to AWS#
   contents: read
   pull-requests: write
 
