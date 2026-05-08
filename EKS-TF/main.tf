@@ -56,16 +56,39 @@ resource "aws_security_group" "eks_cluster_sg" {
   }
 }
 
-# Get public subnets for cluster
+# Get supported availability zones
+data "aws_availability_zones" "available" {
+  state = "available"
+
+  exclude_names = ["us-east-1e"]
+}
+
+# Get public subnets
 data "aws_subnets" "public" {
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.default.id]
   }
+
   filter {
     name   = "map-public-ip-on-launch"
     values = ["true"]
   }
+}
+
+# Get subnet details
+data "aws_subnet" "public_details" {
+  for_each = toset(data.aws_subnets.public.ids)
+  id       = each.value
+}
+
+# Filter supported subnets only
+locals {
+  eks_subnet_ids = [
+    for subnet in data.aws_subnet.public_details :
+    subnet.id
+    if contains(data.aws_availability_zones.available.names, subnet.availability_zone)
+  ]
 }
 
 # EKS Cluster Provisioning
