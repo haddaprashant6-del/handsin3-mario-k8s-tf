@@ -4,6 +4,6 @@ terraform {
     key            = "eks/terraform.tfstate"  # Standardized directory naming
     region         = "us-east-1"  # Changed to match provider region
     encrypt        = true  # Ensures state file is encrypted
-    dynamodb_table = "terraform-lock"  # Enables state locking to prevent conflicts
+    dynamodb_table = "Terraformmmmq_table"  # Enables state locking to prevent conflicts
   }
 }
