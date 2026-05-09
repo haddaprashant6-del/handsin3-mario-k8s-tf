@@ -286,6 +286,10 @@ jobs:
             -backend-config="key=super-mario/terraform.tfstate" \
             -backend-config="region=${{ env.AWS_REGION }}" \
             -backend-config="dynamodb_table=${{ secrets.TF_LOCK_TABLE }}"
+            
+      - name: Import Existing IAM Role
+        run: |
+          terraform import aws_iam_role.eks_cluster_role eks-cluster-cloud || true
 
       - name: Download saved plan
         uses: actions/download-artifact@v4
